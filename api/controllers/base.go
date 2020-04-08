@@ -7,6 +7,10 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
 	"github.com/mrojasb2000/fullstack/api/models"
+
+	_ "github.com/jinzhu/gorm/dialects/mysql"    //mysql database driver
+	_ "github.com/jinzhu/gorm/dialects/postgres" //postgres database driver
+
 )
 
 // Server base structure
