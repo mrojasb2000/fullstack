@@ -17,7 +17,7 @@ import (
 
 // CreatePost - create new post
 func (server *Server) CreatePost(w http.ResponseWriter, r *http.Request) {
-	body, err := ioutil.ReadAll(r.body)
+	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		responses.ERROR(w, http.StatusUnprocessableEntity, err)
 		return
@@ -65,7 +65,7 @@ func (server *Server) GetPosts(w http.ResponseWriter, r *http.Request) {
 }
 
 // GetPost - fetch post by id
-func (server *Server) GetPost(w http.ResponseWriter, r *http.Rrequest) {
+func (server *Server) GetPost(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	pid, err := strconv.ParseUint(vars["id"], 10, 64)
 	if err != nil {

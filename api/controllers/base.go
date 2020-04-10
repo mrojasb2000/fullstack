@@ -11,7 +11,6 @@ import (
 
 	_ "github.com/jinzhu/gorm/dialects/mysql"    //mysql database driver
 	_ "github.com/jinzhu/gorm/dialects/postgres" //postgres database driver
-
 )
 
 // Server base structure
@@ -21,7 +20,7 @@ type Server struct {
 }
 
 // Initialize - initialize database.
-func (server *Server) Initialize(Dbdriver, Dbuser, DbPassword, DbPort, DbHost, DbName string) {
+func (server *Server) Initialize(Dbdriver, DbUser, DbPassword, DbPort, DbHost, DbName string) {
 	var err error
 	if Dbdriver == "mysql" {
 		DBURL := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", DbUser, DbPassword, DbHost, DbPort, DbName)
@@ -44,7 +43,7 @@ func (server *Server) Initialize(Dbdriver, Dbuser, DbPassword, DbPort, DbHost, D
 		}
 	}
 	if Dbdriver == "sqlite3" {
-		server.DB, err := gorm.Open(Dbdriver, DbName)
+		server.DB, err = gorm.Open(Dbdriver, DbName)
 		if err != nil {
 			fmt.Printf("Cannot connect to %s database", Dbdriver)
 			log.Fatal("This is the error:", err)
@@ -61,7 +60,7 @@ func (server *Server) Initialize(Dbdriver, Dbuser, DbPassword, DbPort, DbHost, D
 	server.initializeRoutes()
 }
 
-func (server *Server) Run(addr string){
+func (server *Server) Run(addr string) {
 	fmt.Println("Listening to port 8080")
 	log.Fatal(http.ListenAndServe(addr, server.Router))
 }

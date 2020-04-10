@@ -54,6 +54,10 @@ func Load(db *gorm.DB) {
 		if err != nil {
 			log.Fatalf("cannot seed users table: %v", err)
 		}
+
+		// Fix: cannot migrate table: Error 1170: BLOB/TEXT column 'name_field' used in key specification without a key length
+		db.Debug().Model(&models.User{}).AddUniqueIndex("idx_user_nickname_email", "nickname", "email")
+
 		posts[i].AuthorID = users[i].ID
 
 		err = db.Debug().Model(&models.Post{}).Create(&posts[i]).Error

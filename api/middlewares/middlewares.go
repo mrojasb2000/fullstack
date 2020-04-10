@@ -17,7 +17,7 @@ func SetMiddlewareJSON(next http.HandlerFunc) http.HandlerFunc {
 }
 
 // SetMiddlewareAuthentication - This will check for the validity of the authentication token provided
-func SetMiddlewareAuthentication(next, http.HandlerFunc) http.HandlerFunc {
+func SetMiddlewareAuthentication(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		err := auth.TokenValid(r)
 		if err != nil {

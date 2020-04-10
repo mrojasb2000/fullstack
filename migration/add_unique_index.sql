@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX idx_user_nickname_email ON `users`(`nickname`, `email`)   

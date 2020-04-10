@@ -17,13 +17,13 @@ import (
 
 // CreateUser - create new user
 func (server *Server) CreateUser(w http.ResponseWriter, r *http.Request) {
-	body, err := ioutil.ReadAll(r.body)
+	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		responses.ERROR(w, http.StatusUnprocessableEntity, err)
 		return
 	}
 	user := models.User{}
-	err = json.unmarshal(body, &user)
+	err = json.Unmarshal(body, &user)
 	if err != nil {
 		responses.ERROR(w, http.StatusUnprocessableEntity, err)
 		return
@@ -38,18 +38,17 @@ func (server *Server) CreateUser(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		formattedError := formaterror.FormatError(err.Error())
-
-		responses.ERROR(w, http.StatusUnprocessableEntity, err)
+		responses.ERROR(w, http.StatusUnprocessableEntity, formattedError)
 		return
 	}
-	w.Header().Set("Location", fmt.Sprintf("%s%s/%d"), r.Host, r.RequestURI, userCreated.ID)
+	w.Header().Set("Location", fmt.Sprintf("%s%s/%d", r.Host, r.RequestURI, userCreated.ID))
 	responses.JSON(w, http.StatusOK, userCreated)
 }
 
 // GetUsers - fetch all users
 func (server *Server) GetUsers(w http.ResponseWriter, r *http.Request) {
 	user := models.User{}
-	users, err = user.FindAllUsers(server.DB)
+	users, err := user.FindAllUsers(server.DB)
 	if err != nil {
 		responses.ERROR(w, http.StatusInternalServerError, err)
 		return
@@ -135,7 +134,7 @@ func (server *Server) DeleteUser(w http.ResponseWriter, r *http.Request) {
 		responses.ERROR(w, http.StatusUnauthorized, errors.New(http.StatusText(http.StatusUnauthorized)))
 		return
 	}
-	_, err := user.DeleteAUser(server.DB, uint32(uid))
+	_, err = user.DeleteAUser(server.DB, int32(uid))
 	if err != nil {
 		responses.ERROR(w, http.StatusInternalServerError, err)
 		return

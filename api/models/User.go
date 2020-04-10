@@ -15,8 +15,8 @@ import (
 // User basic struct
 type User struct {
 	ID        uint32    `gorm:"primary_key;auto_increment" json:"id"`
-	Nickname  string    `gorm:"size:255,not null;unique" json:"nickname"`
-	Email     string    `gorm:"size:100,not null;unique" json:"email"`
+	Nickname  string    `gorm:"size:255,not null;" json:"nickname"`
+	Email     string    `gorm:"size:100,not null;" json:"email"`
 	Password  string    `gorm:"size:100,not null;" json:"password"`
 	CreatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
 	UpdatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
@@ -24,7 +24,7 @@ type User struct {
 
 // Hash password function
 func Hash(password string) ([]byte, error) {
-	return bcryt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	return bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 }
 
 // VerifyPassword - validate hashedPassword and password function
@@ -32,7 +32,7 @@ func VerifyPassword(hashedPassword, password string) error {
 	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 }
 
-// BeforeSave
+// BeforeSave method
 func (u *User) BeforeSave() error {
 	hashedPassword, err := Hash(u.Password)
 	if err != nil {
@@ -100,7 +100,7 @@ func (u *User) Validate(action string) error {
 // SaveUser - Create user on database
 func (u *User) SaveUser(db *gorm.DB) (*User, error) {
 	var err error
-	err = db.Debug().Create(&u).error
+	err = db.Debug().Model(&User{}).Create(&u).Error
 	if err != nil {
 		return &User{}, err
 	}
@@ -108,7 +108,7 @@ func (u *User) SaveUser(db *gorm.DB) (*User, error) {
 }
 
 // FindAllUsers - fetch all users
-func (u *User) FindAllUsers(db *gorm.DB) (*User, error) {
+func (u *User) FindAllUsers(db *gorm.DB) (*[]User, error) {
 	var err error
 	users := []User{}
 	err = db.Debug().Model(&User{}).Limit(100).Find(&users).Error
@@ -119,7 +119,7 @@ func (u *User) FindAllUsers(db *gorm.DB) (*User, error) {
 }
 
 // FindUserBy - fetch user by id
-func (u *User) FindUserBy(db *gorm.DB, uid uint32) (*User, error) {
+func (u *User) FindUserByID(db *gorm.DB, uid uint32) (*User, error) {
 	var err error
 	err = db.Debug().Model(User{}).Where("id = ?", uid).Take(&u).Error
 	if err != nil {
