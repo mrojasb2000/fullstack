@@ -114,7 +114,7 @@ func TestLogin(t *testing.T) {
 		handler.ServeHTTP(rr, req)
 
 		assert.Equal(t, rr.Code, v.statusCode)
-		if v.statusCode == 200 {
+		if v.statusCode == 201 {
 			assert.NotEqual(t, rr.Body.String(), "")
 		}
 
