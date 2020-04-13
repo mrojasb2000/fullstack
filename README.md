@@ -1,11 +1,4 @@
-¿Qué representa el color rojo?
-Las líneas que necesiten ser personalizadas por el usuario serán marcadas con rojo en este tutorial. El resto podrá ser copiado y pegado en su mayoría.
-
-Acerca de MySQL
-MySQL es un manejador de base de datos de código libre que atyda a los usuarios a almacenar, organizar y recolectar datos. Tiene variedad de opciones para otorgar a determinados usuarios permisos entre tablas y bases de datos, éste tutorial te dará una pequeña introducción a algunas de estas opciones.
-
-¿Cómo crear un nuevo usuario?
-En la parte 1 del tutorial de MySQL, hicimos todas las ediciones como usuario root, con acceso completo a todas las bases de datos. Como sea, en este caso hay mas restricciones que pueden ser requeridas, hay formas de crear usuarios con persmisos personalizados.
+MySQL
 
 Vamos empezando por crear un usuario nuevo desde la consola de MySQL:
 
@@ -71,3 +64,36 @@ PRIMARY KEY (`id`)
  
 
 CREATE UNIQUE INDEX idx_user_nickname_email ON `users`(`nickname`, `email`)   
+
+
+Postgres
+
+CREATE TABLE "users" 
+(
+ "id" bigserial,
+ "nickname" text,
+ "email" text,
+ "password" text,
+ "created_at" timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
+ "updated_at" timestamp with time zone DEFAULT CURRENT_TIMESTAMP, 
+ PRIMARY KEY ("id")
+)  
+
+
+CREATE TABLE "posts" 
+(
+ "id" bigserial,
+ "title" varchar(255) NOT NULL UNIQUE,
+ "content" varchar(255) NOT NULL,
+ "author_id" bigint NOT NULL,
+ "created_at" timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
+ "updated_at" timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
+ PRIMARY KEY ("id")
+)  
+
+
+Ejecutar Test
+$ cd tests/modeltest
+$ go test -v --run TestFindAllUsers
+$ go test -v --run TestUpdateAPost
+$ go test -v
