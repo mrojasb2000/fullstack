@@ -93,7 +93,24 @@ CREATE TABLE "posts"
 
 
 Ejecutar Test
+
+$ cd $GOPATH/src/github.com/<username>/fullstack
 $ cd tests/modeltest
 $ go test -v --run TestFindAllUsers
 $ go test -v --run TestUpdateAPost
+$ go test -v --run TestSignIn
 $ go test -v
+
+
+
+Ejecutar la aplicación
+$ cd $GOPATH/src/github.com/<username>/fullstack
+$ go run main.go	
+
+
+
+Detener la aplicación
+
+$ cd $GOPATH/src/github.com/<username>/fullstack
+$ lsof -i :8080 | grep LISTEN
+$ kill -9 <PID>	

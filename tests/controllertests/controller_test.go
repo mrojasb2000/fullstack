@@ -74,17 +74,21 @@ func refreshUserTable() error {
 	return nil
 }
 
+func refreshUserAndPostTable() error {
+	return refreshUserTable()
+}
+
 func seedOneUser() (models.User, error) {
 	err := refreshUserTable()
 	if err != nil {
 		log.Fatal(err)
 	}
 	user := models.User{
+		ID:       1, // required by test create one post
 		Nickname: "Pet",
 		Email:    "pet@gmail.com",
 		Password: "password",
 	}
-
 	err = server.DB.Model(&models.User{}).Create(&user).Error
 	if err != nil {
 		return models.User{}, err
@@ -99,36 +103,25 @@ func seedUsers() ([]models.User, error) {
 	}
 	users := []models.User{
 		models.User{
+			ID:       1, // required by test create one post
 			Nickname: "Steven victor",
 			Email:    "steven@gmail.com",
 			Password: "password",
 		},
 		models.User{
+			ID:       2, // required by test create one post
 			Nickname: "Kenny Morris",
 			Email:    "kenny@gmail.com",
 			Password: "password",
 		},
 	}
-	for i, _ := range users {
+	for i := range users {
 		err := server.DB.Model(&models.User{}).Create(&users[i]).Error
 		if err != nil {
 			return []models.User{}, err
 		}
 	}
 	return users, nil
-}
-
-func refreshUserAndPostTable() error {
-	err := server.DB.DropTableIfExists(&models.Post{}, &models.User{}).Error
-	if err != nil {
-		return err
-	}
-	err = server.DB.AutoMigrate(&models.User{}, &models.Post{}).Error
-	if err != nil {
-		return err
-	}
-	log.Printf("Successfully refreshed tables")
-	return nil
 }
 
 func seedOneUserAndOnePost() (models.Post, error) {
