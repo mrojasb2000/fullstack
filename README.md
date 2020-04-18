@@ -100,7 +100,7 @@ $ go test -v --run TestFindAllUsers
 $ go test -v --run TestUpdateAPost
 $ go test -v --run TestSignIn
 $ go test -v
-
+$ go test -v ./tests/...
 
 
 Ejecutar la aplicación
