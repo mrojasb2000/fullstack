@@ -11,8 +11,9 @@ import (
 	"testing"
 
 	"github.com/gorilla/mux"
-	"github.com/mrojasb2000/fullstack/api/models"
 	"gopkg.in/go-playground/assert.v1"
+
+	"github.com/mrojasb2000/fullstack/api/models"
 )
 
 func TestCreateUser(t *testing.T) {
@@ -194,6 +195,8 @@ func TestUpdateUser(t *testing.T) {
 
 	// Login the user and get the authentication token
 	token, err := server.SignIn(AuthEmail, AuthPassword)
+	fmt.Println("1 AuthEmail:", AuthEmail)
+	fmt.Println("1 AuthPassword:", AuthPassword)
 	if err != nil {
 		log.Fatalf("cannot login: %v\n", err)
 	}
@@ -308,11 +311,13 @@ func TestDeleteUser(t *testing.T) {
 		}
 		AuthID = user.ID
 		AuthEmail = user.Email
-		AuthPassword = user.Password //// Note the password in the database is already hashed, we want unhashed
+		AuthPassword = "password" //// Note the password in the database is already hashed, we want unhashed
 	}
 
 	// Login the user and get the authentication token
 	token, err := server.SignIn(AuthEmail, AuthPassword)
+	fmt.Println("2 AuthEmail:", AuthEmail)
+	fmt.Println("2 AuthPassword:", AuthPassword)
 	if err != nil {
 		log.Fatalf("cannot login: %v\n", err)
 	}

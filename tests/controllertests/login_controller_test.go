@@ -27,20 +27,27 @@ func TestSignIn(t *testing.T) {
 		password     string
 		errorMessage string
 	}{
+		/*
+			{
+				email:        user.Email,
+				password:     "password", // Note the password has to be this, not the hashed one from database
+				errorMessage: "",
+			},*/
+		/*
+			{
+				email:        user.Email,
+				password:     "Wrong password",
+				errorMessage: "crypto/bcrypt: hashedPassword is not the hash of the given password",
+			},
+			{
+				email:        "Wrong email",
+				password:     "password",
+				errorMessage: "record not found",
+			},*/
 		{
 			email:        user.Email,
 			password:     "password", // Note the password has to be this, not the hashed one from database
 			errorMessage: "",
-		},
-		{
-			email:        user.Email,
-			password:     "Wrong password",
-			errorMessage: "crypto/bcrypt: hashedPassword is not the hash of the given password",
-		},
-		{
-			email:        "Wrong email",
-			password:     "password",
-			errorMessage: "record not found",
 		},
 	}
 

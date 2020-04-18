@@ -11,8 +11,9 @@ import (
 	"testing"
 
 	"github.com/gorilla/mux"
-	"github.com/mrojasb2000/fullstack/api/models"
 	"gopkg.in/go-playground/assert.v1"
+
+	"github.com/mrojasb2000/fullstack/api/models"
 )
 
 func TestCreatePost(t *testing.T) {
@@ -241,6 +242,8 @@ func TestUpdatePost(t *testing.T) {
 	}
 	// Login the user and get the authentication token
 	token, err := server.SignIn(PostUserEmail, PostUserPassword)
+	fmt.Println("1 PostUserEmail:", PostUserEmail)
+	fmt.Println("1 PostUserPassword:", PostUserPassword)
 	if err != nil {
 		log.Fatalf("cannot login: %v\n", err)
 	}
@@ -394,6 +397,8 @@ func TestDeletePost(t *testing.T) {
 
 	// Login the user and get the authentication token
 	token, err := server.SignIn(PostUserEmail, PostUserPassword)
+	fmt.Println("2 PostUserEmail:", PostUserEmail)
+	fmt.Println("2 PostUserPassword:", PostUserPassword)
 	if err != nil {
 		log.Fatalf("cannot login: %v\n", err)
 	}
