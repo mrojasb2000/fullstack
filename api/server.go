@@ -6,11 +6,15 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+
 	"github.com/mrojasb2000/fullstack/api/controllers"
 	"github.com/mrojasb2000/fullstack/api/seed"
 )
 
 var server = controllers.Server{}
+
+const http_port = "8080"
+const http_server = "localhost"
 
 func init() {
 	// loads values from .env into the system
@@ -24,7 +28,7 @@ func Run() {
 	var err error
 	err = godotenv.Load()
 	if err != nil {
-		log.Fatal("Error getting env, %v", err)
+		log.Fatalf("Error getting env, %v", err)
 	} else {
 		fmt.Println("We are getting the env values")
 	}
@@ -33,5 +37,5 @@ func Run() {
 
 	seed.Load(server.DB)
 
-	server.Run(":8080")
+	server.Run(http_port)
 }

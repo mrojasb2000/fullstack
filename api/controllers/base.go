@@ -7,10 +7,10 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
-	"github.com/mrojasb2000/fullstack/api/models"
-
 	_ "github.com/jinzhu/gorm/dialects/mysql"    //mysql database driver
 	_ "github.com/jinzhu/gorm/dialects/postgres" //postgres database driver
+
+	"github.com/mrojasb2000/fullstack/api/models"
 )
 
 // Server base structure
@@ -60,7 +60,8 @@ func (server *Server) Initialize(Dbdriver, DbUser, DbPassword, DbPort, DbHost, D
 	server.initializeRoutes()
 }
 
+// Run -running server instance
 func (server *Server) Run(addr string) {
-	fmt.Println("Listening to port 8080")
-	log.Fatal(http.ListenAndServe(addr, server.Router))
+	fmt.Println("Listening to port ", addr)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", addr), server.Router))
 }
